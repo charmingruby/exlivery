@@ -1,29 +1,24 @@
-defmodule ExliveryTest.Users.UserTest do
+defmodule Exlivery.Users.UserTest do
   use ExUnit.Case
 
   alias Exlivery.Users.User
 
+  import Exlivery.Factory
+
   describe "build/5" do
-    test "should return the user if the params are valid" do
+    test "when all params are valid, returns an user" do
       response =
-        User.build("John Doe", "johndoe@email.com", "12345678912", 20, "Toronto, 17th street")
+        User.build("John Doe", "john@doe.com", "12345678912", 64, "123 Main St")
 
       expected_response =
-        {:ok,
-         %Exlivery.Users.User{
-           address: "Toronto, 17th street",
-           age: 20,
-           cpf: "12345678912",
-           email: "johndoe@email.com",
-           name: "John Doe"
-         }}
+        {:ok, build(:user)}
 
       assert response == expected_response
     end
 
-    test "should return an error if params are invalid" do
+    test "when params are invalid, returns an error" do
       response =
-        User.build("John Doe", "johndoe@email.com", "12345678912", 15, "Toronto, 17th street")
+        User.build("John Doe", "john@doe.com", "12345678912", 15, "123 Main St")
 
       expected_response = {:error, "Invalid parameters."}
 
